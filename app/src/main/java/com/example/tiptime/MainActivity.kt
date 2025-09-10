@@ -89,7 +89,7 @@ fun TipTimeLayout() {
     val amount = amountInput.toDoubleOrNull() ?: 0.0
     val tipPercent = tipInput.toDoubleOrNull() ?: 0.0
     val tip = calculateTip(amount, tipPercent, roundUp)
-    val msg: String = stringResource(R.string.Mensaje_neutro)
+
     Column(
         modifier = Modifier
             .statusBarsPadding()
@@ -143,7 +143,8 @@ fun TipTimeLayout() {
         )
         Mensaje(
 
-            texto = msg
+            if (roundUp) "La propina será redondeada" else "La propina no será redondeada"
+
         )
         Spacer(modifier = Modifier.height(150.dp))
     }
@@ -221,15 +222,24 @@ fun RoundTheTipRow(
     }
 }
 
+
+
 @Composable
-fun Mensaje(texto: String) {
-    Text(
-        text = texto,
-        color = Color(0xFFFFB5C0),
-        fontSize = 18.sp,
-        fontWeight = FontWeight.Medium
-    )
+fun Mensaje(texto: String, modifier: Modifier = Modifier) {
+    var texto by remember { mutableStateOf(texto) }
+
+    Column {
+        Text(
+            text = texto,
+            color = Color(0xFFFFB5C0),
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Medium,
+            modifier = modifier
+        )
+
+    }
 }
+
 
 
 /**
